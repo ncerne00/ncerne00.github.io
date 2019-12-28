@@ -1,0 +1,44 @@
+/* main styling: */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing:border-box;
+}
+#navbar ul, #navbar ul li, #navbar ul li a{
+    float: none;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    margin: 5px;
+    
+}
+
+/* styling */
+ #navbar {
+    float: none;
+    text-align: center;
+}
+.smalltext{
+    font-size: 18px;
+}
+
+/* jumbotron styling */
+.jumbotron img{
+    height: 143px;
+    width: 143px;
+    margin-bottom: 100px;
+}
+.jumbotron ul{
+    text-align: center;
+    margin-top: 50px;
+}
+.jumbotron ul h2{
+    margin: 0;
+}
+.jumbotron ul h3{
+    margin: 0;
+}
+/* box */
+.box{
+    width: 100%;
+}
