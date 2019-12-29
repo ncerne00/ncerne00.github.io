@@ -46,3 +46,14 @@
 .box{
     width: 100%;
 }
+.box2{
+    width: 33.33%;
+    background-color: #343434;
+    border: 1.5px lightcoral solid; 
+
+    text-align: center;
+    padding: 10px;
+    float: left;
+    height: 50vh;
+    width: 100%;
+}
