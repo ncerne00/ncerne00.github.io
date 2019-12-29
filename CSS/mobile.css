@@ -26,14 +26,18 @@
 .jumbotron img{
     height: 143px;
     width: 143px;
-    margin-bottom: 100px;
+    margin: 0px 0px 70px 0px;
+    
 }
 .jumbotron ul{
     text-align: center;
-    margin-top: 50px;
+   display: inline-block;
+   margin: 60px 0px 0px 30px;
+   
 }
 .jumbotron ul h2{
     margin: 0;
+    float: center;
 }
 .jumbotron ul h3{
     margin: 0;
