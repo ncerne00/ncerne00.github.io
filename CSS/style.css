@@ -110,6 +110,7 @@ img {
 .box50 {
  width: 50%;
  background-color: black;
+ border-top: #f4f4f4 1.5px solid;
  border-bottom: #f4f4f4 1.5px solid;
  float: left;
  text-align: center;
