@@ -21,9 +21,9 @@ img {
     background-color: black;
     margin-bottom: 0;
     padding: 20px;
+    
 }
 .footer p{
-    margin-top: 20px;
     text-align:center;
 }
 /* navbar styling */
@@ -92,6 +92,7 @@ img {
     padding: 10px;
     float: left;
     height: 50vh;
+    border-bottom: none;
 }
 .box2{
     width: 33.33%;
@@ -103,6 +104,21 @@ img {
     padding: 10px;
     float: left;
     height: 50vh;
+    border-bottom: none;
+}
+
+.box50 {
+ width: 50%;
+ background-color: black;
+ border: 1.5px #f4f4f4 solid; 
+ float: left;
+ text-align: center;
+ overflow: hidden;
+ height: 50vh;
+}
+.box50 img{
+    height: 50vh;
+    width: 100%;
 }
 /* Styling */
 .btnprimary{
