@@ -13,6 +13,10 @@
     
 }
 
+#navbar ul{
+    margin-bottom: 30px;
+}
+
 /* styling */
  #navbar {
     float: none;
@@ -54,11 +58,12 @@
 }
 .box2{
     width: 33.33%;
-    background-color: #343434;
-    border: 1.5px lightcoral solid; 
+    background-color: black;
+    border: 1.5px white solid; 
     text-align: center;
     padding: 10px;
     float: left;
     height: 50vh;
     width: 100%;
 }
+
