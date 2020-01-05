@@ -72,4 +72,7 @@
 .box50{
     width: 100%;
 }
+.box50 img{
+    border-right: none;
+}
 
