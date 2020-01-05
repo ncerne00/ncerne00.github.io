@@ -55,11 +55,14 @@
 /* box */
 .box{
     width: 100%;
+    border-top: none;
 }
 .box2{
     width: 33.33%;
     background-color: black;
     border: 1.5px white solid; 
+    border-right: none;
+    border-left: none;
     text-align: center;
     padding: 10px;
     float: left;
