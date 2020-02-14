@@ -18,7 +18,7 @@ img {
     margin: 0;
 }
 .bgfooter{
-    background-color: black;
+    background-color: whitesmoke;
     margin-bottom: 0;
     padding: 20px;
     
@@ -28,9 +28,9 @@ img {
 }
 /* navbar styling */
 #navbar{
-    background-color: black;
-    color: #f4f4f4;
-    border-bottom: 1.5px #f4f4f4 solid;
+    background-color: whitesmoke;
+    color: #222;
+    border-bottom: 1.5px salmon solid;
     
 }
 #navbar ul{
@@ -44,9 +44,12 @@ img {
    
     
 }
+#navbar a{
+    color: #222;
+}
 #navbar a:hover{
     text-decoration: none;
-    color: #f4f4f4;
+    color: whitesmoke;
 }
 /* jumbotron Section */
 .jumbotron{
@@ -62,7 +65,7 @@ img {
     height: 300px;
     width: 300px;
     border-radius: 50%;
-    border: solid 1.5px #f4f4f4;
+    border: solid 1.5px whitesmoke;
     margin-bottom: 150px;
     
     margin-right: 20px;
@@ -86,8 +89,8 @@ img {
 /*Box Styling*/
 .box{
     width: 33.33%;
-    background-color: black;
-    border: 1.5px #f4f4f4 solid; 
+    background-color: whitesmoke;
+    border: 1.5px #222 solid; 
     border-right: none;
     border-left: none;
     text-align: center;
@@ -98,8 +101,8 @@ img {
 }
 .box2{
     width: 33.33%;
-    background-color: black;
-    border: 1.5px #f4f4f4 solid; 
+    background-color: whitesmoke;
+    border: 1.5px #222 solid; 
     text-align: center;
     padding: 10px;
     float: left;
@@ -109,9 +112,9 @@ img {
 
 .box50 {
  width: 50%;
- background-color: black;
- border-top: #f4f4f4 1.5px solid;
- border-bottom: #f4f4f4 1.5px solid;
+ background-color: whitesmoke;
+ border-top: #222 1.5px solid;
+ border-bottom: #222 1.5px solid;
  float: left;
  text-align: center;
  overflow: hidden;
@@ -120,26 +123,26 @@ img {
 .box50 img{
     height: 50vh;
     width: 100%;
-    border-right: 1.5px #f4f4f4 solid;
+    border-right: 1.5px #222 solid;
 }
 /* Styling */
 .btnprimary{
     border-radius: 5px;
-    border: 1.5px solid black;
-    background-color: #f4f4f4;
+    border: 1.5px solid #333;
+    background-color: whitesmoke;
     padding: 10px;
     margin-right: 10px;
 }
 
 .btnprimary:hover{
-    background-color: #36454f;
+    background-color: black;
 }
 
-.blacktext{
-    color: black;
+.whitesmoketext{
+    color: whitesmoke;
 }
 .whitetext{
-    color: #f4f4f4;
+    color: whitesmoke;
 }
 .logo{
     padding: 30px 0 0 0;

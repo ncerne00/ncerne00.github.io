@@ -18,7 +18,7 @@ img {
     margin: 0;
 }
 .bgfooter{
-    background-color: black;
+    background-color: whitesmoke;
     margin-bottom: 0;
     padding: 20px;
 }
@@ -28,9 +28,9 @@ img {
 }
 /* navbar styling */
 #navbar{
-    background-color: black;
-    color: #f4f4f4;
-    border-bottom: 1.5px #f4f4f4 solid;
+    background-color: whitesmoke;
+    color: #222;
+    border-bottom: 1.5px salmon solid;
     
 }
 #navbar ul{
@@ -41,6 +41,9 @@ img {
     float: left;
     list-style-type: none;
     
+}
+#navbar a{
+    color: black;
 }
 #navbar a:hover{
     text-decoration: none;
@@ -86,8 +89,8 @@ img {
 /*Box Styling*/
 .box{
     width: 33.33%;
-    background-color: black;
-    border: 1.5px #f4f4f4 solid;
+    background-color: whitesmoke;
+    border: 1.5px black solid;
     border-right: none;
     border-left: none; 
     text-align: center;
@@ -97,8 +100,8 @@ img {
 }
 .box2{
     width: 33.33%;
-    background-color: black;
-    border: 1.5px #f4f4f4 solid; 
+    background-color: whitesmoke;
+    border: 1.5px black solid; 
     text-align: center;
     padding: 10px;
     float: left;
@@ -107,14 +110,14 @@ img {
 /* Styling */
 .btnprimary{
     border-radius: 5px;
-    border: 1.5px solid black;
+    border: 1.5px solid #222;
     background-color: #f4f4f4;
     padding: 10px;
     margin-right: 10px;
 }
 
 .btnprimary:hover{
-    background-color: #36454f;
+    background-color: black;
 }
 
 .blacktext{
@@ -129,4 +132,7 @@ img {
 }
 .addpadding{
     padding: 20px;
+}
+.box50{
+    border-top: none;
 }

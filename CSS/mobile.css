@@ -59,8 +59,8 @@
 }
 .box2{
     width: 33.33%;
-    background-color: black;
-    border: 1.5px #f4f4f4 solid; 
+    background-color: whitesmoke;
+    border: 1.5px #222 solid; 
     border-right: none;
     border-left: none;
     text-align: center;
@@ -75,9 +75,9 @@
 }
 .box50 img{
     border-right: none;
-    border-top: 1.5px #f4f4f4 solid;
+    border-top: 1.5px #222 solid;
 }
 .bordertop{
-    border-top: 1.5px #f4f4f4 solid;
+    border-top: 1.5px #222 solid;
 }
 
