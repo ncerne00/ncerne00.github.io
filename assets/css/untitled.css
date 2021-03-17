@@ -1,0 +1,77 @@
+.img-fluid.d-block.mx-auto.mb-5 {
+  border-radius: 50%;
+  width: 270px;
+  height: 270px;
+}
+
+.top-border{
+  border-top: 1px gray;
+}
+.bg-primary {
+  background-color: White!important;
+}
+
+.bg-secondary {
+  background-color: #fff!important;
+}
+
+hr.star-light:after {
+  color: #000000;
+  background-color: rgb(255,255,255);
+}
+
+hr.star-light {
+  border-color: #000000;
+}
+
+#mainNav {
+  box-shadow: 0 4px 2px -2px rgb(222,222,222);
+}
+
+.container-profile {
+  box-shadow: 2px 2px 2px 2px gray;
+}
+
+.text-secondary {
+  color: #000000!important;
+}
+
+hr.star-dark:after {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+a[href*="NickCerneResume.pdf"] {
+  background: url(/assets/img/resume.svg) no-repeat left center;
+  padding-left: 19px;
+}
+
+a[href*="ncerne00@vt.edu"] {
+  background: url(/assets/img/envelope-open-text-solid.svg) no-repeat left center;
+  padding-left: 19px;
+}
+
+.footer {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: #ffffff;
+  color: #fff;
+}
+
+a {
+  color: #0166ff;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #0166ff;
+}
+
+.text-white {
+  color: #000000 !important;
+}
+
+.copyright {
+  background-color: #ffffff;
+}
+
