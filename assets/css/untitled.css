@@ -14,14 +14,8 @@
 .bg-secondary {
   background-color: #fff!important;
 }
-
-hr.star-light:after {
-  color: #000000;
-  background-color: rgb(255,255,255);
-}
-
-hr.star-light {
-  border-color: #000000;
+hr.solid{
+  border-top: 3px solid #000000;
 }
 
 #mainNav {
