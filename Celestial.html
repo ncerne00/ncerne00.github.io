@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Final</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Article-Clean.css">
+    <link rel="stylesheet" href="assets/css/Article-List.css">
+    <link rel="stylesheet" href="assets/css/best-carousel-slide.css">
+    <link rel="stylesheet" href="assets/css/Carousel_Image_Slider-1.css">
+    <link rel="stylesheet" href="assets/css/Carousel_Image_Slider.css">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="assets/css/Highlight-Phone.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+    <link rel="stylesheet" href="assets/css/Juvi---3-Bullets-Divider---Left-Aligned-Grey.css">
+    <link rel="stylesheet" href="assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="background: rgb(0,0,0);">
+    <nav class="navbar navbar-light navbar-expand-md navbar" style="border-radius: 0px;background: #ffffff;border-bottom: 1px solid rgb(162,162,162) ;">
+        <div class="container-fluid"><a class="navbar-brand" href="index.html" style="border-color: rgba(255,255,255,0.9);color: rgba(1,1,1,0.9);font-family: Allerta, sans-serif;">Home</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="HTB.html" style="color: rgba(0,0,0,0.9);border-color: rgb(2,237,11);font-family: Allerta, sans-serif;">HackTheBox</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Certifications.html" style="color: rgba(0,0,0,0.5);font-family: Allerta, sans-serif;border-color: rgba(255,255,255,0.5);">Certifications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="\Resume\NickCerneResume.pdf" style="color: rgba(0,0,0,0.5);font-family: Allerta, sans-serif;">Resume</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="article-clean">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+                    <div class="intro" style="text-align: center;">
+                        <h1 class="text-center">Celestial Walkthrough</h1>
+                        <p class="text-center"><span class="by">by</span> <a href="index.html">Nick Cerne</a><span class="date">April 14, 2021</span></p><img class="img-fluid" src="assets/img/Tempclipboard-image.png">
+                    </div>
+                    <div class="text">
+                        <p>Today I will be starting my HackTheBox walkthrough series with a machine called Celestial.&nbsp;</p>
+                        <p>To preface this, I began ethically hacking on HackTheBox around two months ago. HackTheBox is an awesome platform that hosts vulnerable machines for educational purposes.&nbsp;</p>
+                        <p>I joined the platform to hone my skills in both offensive and defensive security, and am using it to prepare for the eJPT and OSCP exams.&nbsp;</p>
+                        <h2 style="text-align: center;">The Walkthrough</h2>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image.png"></figure>
+                        <p>As you can see from the above image, Celestial is running on the IP address 10.129.134.173. Lets start with an nmap scan to get an idea of some of the services running on the machine.</p>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-1.png">
+                            <figcaption>nmap scan report</figcaption>
+                        </figure>
+                        <p>A quick nmap scan reveals that we have a service called Node.js Express Framework running on TCP port 3000.</p>
+                        <p>The Node.js Express Framework is commonly used to develop and scale web and mobile applications. Lets navigate to&nbsp;10.129.134.173 on port 3000 to see if we reveal anything else.<br></p>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-2.png"></figure>
+                        <p>Upon navigation, we can see an HTML page with some text. Lets analyze the network traffic to see if we can spot anything else.&nbsp;</p>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-3.png"></figure>
+                        <p>Looking at the network traffic, we notice an HTTP get request that contains a Base64 encoded cookie. Interesting, lets open the webpage in Burpsuite and see if we can decode the cookie.&nbsp;</p>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-4.png">
+                            <p>This is interesting, it looks like we may have intercepted some information a user may have filled out in a form or something. Lets see if we can interact with the cookie in any way.&nbsp;</p>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-5.png"></figure>
+                            <p>First, I changed the number from 2 to 200 and then encoded it back into Base64.</p>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-6.png">
+                                <p>Then, I copied and replaced the old cookie with our new cookie. Lets observe how it affects the webpage.</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-7.png">
+                                <p>Interesting, after forwarding our new cookie to the machine we are presented with an error. This error message reveals a lot of things to us. For one, we can see that there is a user "sun" on the system. Secondly, we can see that our cookie causes an error in the unserialize() function within the node-serialize module.</p>
+                                <p>After some light research, there is evidently a major flaw with unserialize function when untrusted input is passed through. More information regarding the vulnerability can be found&nbsp;<a href="https://ajinabraham.com/blog/exploiting-deserialization-bugs-in-nodejs-modules-for-remote-code-execution">here</a>.&nbsp;</p>
+                                <p>Fortunately for us, we will be able to use this flaw for remote code execution. In addition to that, the discoverer of this vulnerability, Ajin Braham, has also created a payload generator titled nodejsshell.py. Lets see if we can use it to get remote code execution on the machine.</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-8.png">
+                                <figcaption class="figure-caption">Downloaded Exploit</figcaption>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-9.png">
+                                <figcaption class="figure-caption">Generated Payload</figcaption>
+                                <p>Here we ran the script specifying our IP address and the port we want to listen on, and then output the results into a file "Exploit.txt."</p>
+                                <p>Now that we have our payload, we need to do a few things:</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-10.png">
+                                <figcaption class="figure-caption">Enclosing the Payload Within the RCE Property and Encoding it into Base64</figcaption>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-12.png">
+                                <figcaption class="figure-caption">Setting Up a Listener on Port 1337</figcaption>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-13.png">
+                                <figcaption class="figure-caption">Adding Our Payload to the Cookie and Forwarding it</figcaption>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-14.png">
+                                <figcaption class="figure-caption">Success!</figcaption>
+                                <p>Now that we are on the system, lets do some poking around.</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-15.png">
+                                <p>Right away we find the user.txt file located in ~/Documents.&nbsp;Also we notice a "script.py" file that we investigate later.<br></p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-16.png">
+                                <p>We also notice a few other things located in our home directory. For instance, there is an "output.txt" file which is owned by root. Also, there is a server.js file which we own, and a script.py which we also own.<br></p>
+                                <p>We also notice that script.py prints "Script is running..." when it runs, and that output.txt contains that exact output. This lets us know that there is some correlation between the Python script and the output.txt file that root owns.&nbsp;<br></p>
+                                <p>Since output.txt is owned by root and script.py is owned by us, something that is running as root might be running our script.py. Sometimes this is a result of a cronjob misconfiguration, lets check if cronjobs are producing any output in /var/log.<br></p>
+                            </figure>
+                            <figure class="figure d-block">
+                                <p></p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-19.png">
+                                <p>This looks interesting, lets take a look at the syslog file.&nbsp;</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-20.png">
+                                <p>Lo and behold we see a cronjob running as root that is executing script.py seemingly every five minutes. Lets echo a python reverse shell into the file and set up a listener.&nbsp;</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-21.png"><img class="figure-img" src="assets/img/Tempclipboard-image-23.png">
+                                <p>We have root and the flag!</p>
+                            </figure>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section></section>
+    <div style="border-top-width: 2px;border-top-color: rgb(0,0,0);">
+        <footer class="footer-basic" style="border-top: 1px solid rgb(173,173,173) ;">
+            <div class="social"><a href="https://www.linkedin.com/in/nick-cerne/" style="background: var(--blue);color: var(--light);border-color: #055ada;border-bottom-width: 0px;border-bottom-color: rgb(255,255,255);"><i class="fa fa-star fa fa-linkedin fa-fw"></i></a></div>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Resume</a></li>
+                <li class="list-inline-item"><a href="mailto:ncerne00@vt.edu">Contact</a></li>
+            </ul>
+            <p class="copyright">Nick Cerne © 2021</p>
+        </footer>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="assets/js/Simple-Slider.js"></script>
+</body>
+
+</html>
