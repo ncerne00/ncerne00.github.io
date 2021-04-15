@@ -46,30 +46,30 @@
                     <div class="text">
                         <p>Today I will be starting my HackTheBox walkthrough series with a machine called Celestial.&nbsp;</p>
                         <p>To preface this, I began ethically hacking on HackTheBox around two months ago. HackTheBox is an awesome platform that hosts vulnerable machines for educational purposes.&nbsp;</p>
-                        <p>I joined the platform to hone my skills in both offensive and defensive security, and am using it to prepare for the eJPT and OSCP exams.&nbsp;</p>
+                        <p>I joined the platform to hone my skills in both offensive and defensive security, and am using it to prepare for the eJPT and OSCP exams. Celestial was the first medium box I was able to root without assistance.&nbsp;</p>
                         <h2 style="text-align: center;">The Walkthrough</h2>
                         <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image.png"></figure>
-                        <p>As you can see from the above image, Celestial is running on the IP address 10.129.134.173. Lets start with an nmap scan to get an idea of some of the services running on the machine.</p>
+                        <p>As you can see from the image above, Celestial is running on the IP address 10.129.134.173. Lets start with an nmap scan to get an idea of some of the services running on the machine.</p>
                         <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-1.png">
-                            <figcaption>nmap scan report</figcaption>
+                            <figcaption>nmap Scan Report</figcaption>
                         </figure>
-                        <p>A quick nmap scan reveals that we have a service called Node.js Express Framework running on TCP port 3000.</p>
-                        <p>The Node.js Express Framework is commonly used to develop and scale web and mobile applications. Lets navigate to&nbsp;10.129.134.173 on port 3000 to see if we reveal anything else.<br></p>
+                        <p>A quick nmap scan reveals that there is a service called Node.js Express Framework running on TCP port 3000.</p>
+                        <p>The Node.js Express Framework is commonly used to develop and scale web and mobile applications. Lets navigate to&nbsp;10.129.134.173 on port 3000 to see if we can reveal anything else.<br></p>
                         <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-2.png"></figure>
                         <p>Upon navigation, we can see an HTML page with some text. Lets analyze the network traffic to see if we can spot anything else.&nbsp;</p>
                         <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-3.png"></figure>
-                        <p>Looking at the network traffic, we notice an HTTP get request that contains a Base64 encoded cookie. Interesting, lets open the webpage in Burpsuite and see if we can decode the cookie.&nbsp;</p>
+                        <p>Looking at the network traffic, we notice an HTTP GET request that contains a Base64 encoded cookie. Interesting, lets open the webpage in Burpsuite and see if we can decode the cookie.&nbsp;</p>
                         <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-4.png">
-                            <p>This is interesting, it looks like we may have intercepted some information a user may have filled out in a form or something. Lets see if we can interact with the cookie in any way.&nbsp;</p>
+                            <p>This is interesting, it looks like we may have intercepted some information from a form that a user filled out. Lets see if we can interact with the cookie in any way.&nbsp;</p>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-5.png"></figure>
-                            <p>First, I changed the number from 2 to 200 and then encoded it back into Base64.</p>
+                            <p>First, I changed the variable "num" from 2 to 200 and then encoded it back into Base64.</p>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-6.png">
-                                <p>Then, I copied and replaced the old cookie with our new cookie. Lets observe how it affects the webpage.</p>
+                                <p>Then, I replaced the old cookie with the new cookie. Lets observe how it affects the webpage.</p>
                             </figure>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-7.png">
-                                <p>Interesting, after forwarding our new cookie to the machine we are presented with an error. This error message reveals a lot of things to us. For one, we can see that there is a user "sun" on the system. Secondly, we can see that our cookie causes an error in the unserialize() function within the node-serialize module.</p>
-                                <p>After some light research, there is evidently a major flaw with unserialize function when untrusted input is passed through. More information regarding the vulnerability can be found&nbsp;<a href="https://ajinabraham.com/blog/exploiting-deserialization-bugs-in-nodejs-modules-for-remote-code-execution">here</a>.&nbsp;</p>
-                                <p>Fortunately for us, we will be able to use this flaw for remote code execution. In addition to that, the discoverer of this vulnerability, Ajin Braham, has also created a payload generator titled nodejsshell.py. Lets see if we can use it to get remote code execution on the machine.</p>
+                                <p>Interesting, after forwarding our new cookie to the machine we are presented with an error. This error message reveals a lot to us. For one, we can see that there is a user "sun" on the system. Secondly, we can see that our cookie causes an error in the unserialize() function within the node-serialize module.</p>
+                                <p>After some light research, there is evidently a major flaw with the unserialize function when untrusted input is passed through. More information regarding the vulnerability can be found&nbsp;<a href="https://ajinabraham.com/blog/exploiting-deserialization-bugs-in-nodejs-modules-for-remote-code-execution">here</a>.&nbsp;</p>
+                                <p>Fortunately for us, we will be able to use this flaw for remote code execution. In addition to that, Ajin Braham, the discoverer of the vulnerability, has also created a payload generator titled nodejsshell.py. Lets see if we can use it to get remote code execution on the machine.</p>
                             </figure>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-8.png">
                                 <figcaption class="figure-caption">Downloaded Exploit</figcaption>
@@ -90,14 +90,14 @@
                             </figure>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-14.png">
                                 <figcaption class="figure-caption">Success!</figcaption>
-                                <p>Now that we are on the system, lets do some poking around.</p>
+                                <p>Now that we are on the system, lets see what we can find.</p>
                             </figure>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-15.png">
                                 <p>Right away we find the user.txt file located in ~/Documents.&nbsp;Also we notice a "script.py" file that we investigate later.<br></p>
                             </figure>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-16.png">
                                 <p>We also notice a few other things located in our home directory. For instance, there is an "output.txt" file which is owned by root. Also, there is a server.js file which we own, and a script.py which we also own.<br></p>
-                                <p>It is also worht noting that when script.py prints "Script is running..." when it runs, and output.txt contains that exact output. This lets us know that there is some correlation between the Python script and the output.txt file that root owns.&nbsp;<br></p>
+                                <p>It is also worth noting that script.py prints "Script is running..." when it runs, and output.txt contains that exact output. This lets us know that there is some correlation between the Python script and the output.txt file that root owns.&nbsp;<br></p>
                                 <p>Since output.txt is owned by root and script.py is owned by us, something that is running as root might be running our script.py. Sometimes this is a result of a cronjob misconfiguration, lets check if cronjobs are producing any output in /var/log.<br></p>
                             </figure>
                             <figure class="figure d-block">
@@ -107,7 +107,7 @@
                                 <p>This looks interesting, lets take a look at the syslog file.&nbsp;</p>
                             </figure>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-20.png">
-                                <p>Lo and behold we see a cronjob running as root that is executing script.py seemingly every five minutes. Lets echo a python reverse shell into script.py and set up a listener.&nbsp;</p>
+                                <p>In the syslog file, we see a cronjob running as root that is executing script.py every five minutes. Lets echo a python reverse shell into script.py and set up a listener.&nbsp;</p>
                             </figure>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/Tempclipboard-image-21.png"><img class="figure-img" src="assets/img/Tempclipboard-image-23.png">
                                 <p>We have root and the flag!</p>
