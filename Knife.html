@@ -41,7 +41,7 @@
                 <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
                     <div class="intro" style="text-align: center;">
                         <h1 class="text-center">Knife Walkthrough</h1>
-                        <p class="text-center"><span class="by">by</span> <a href="index.html">Nick Cerne</a><span class="date">April 14, 2021</span></p><img class="img-fluid" src="assets/img/knife/Pwned.PNG">
+                        <p class="text-center"><span class="by">by</span> <a href="index.html">Nick Cerne</a><span class="date">June 03, 2021</span></p><img class="img-fluid" src="assets/img/knife/Pwned.PNG">
                     </div>
                     <div class="text">
                         <p>Today I will be making an addition to my HackTheBox walkthrough series with an easy machine called Knife.&nbsp;</p>
@@ -73,10 +73,10 @@
                             <p>Now that we have RCE, let's do some user enumeration and attempt to obtain a more interactive shell.</p>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp2.PNG"></figure>
                             <p>According to Burpsuite, we are interacting with the system as user James. Let's see if we can add our public RSA key to the James' authorized_keys file, and attempt to SSH into the server.</p>
-                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp3.PNG">
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/burpsuite3.PNG">
                             <figcaption>Observing James' SSH Keys</figcaption>
                             </figure>
-                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp4.png">
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp4.PNG">
                                 <figcaption>Adding our public RSA key to James' authorized_keys</figcaption>
                                 </figure>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/JamesLogin.PNG">
