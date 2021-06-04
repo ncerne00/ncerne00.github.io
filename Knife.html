@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>NCerne</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Article-Clean.css">
+    <link rel="stylesheet" href="assets/css/Article-List.css">
+    <link rel="stylesheet" href="assets/css/best-carousel-slide.css">
+    <link rel="stylesheet" href="assets/css/Carousel_Image_Slider-1.css">
+    <link rel="stylesheet" href="assets/css/Carousel_Image_Slider.css">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="assets/css/Highlight-Phone.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+    <link rel="stylesheet" href="assets/css/Juvi---3-Bullets-Divider---Left-Aligned-Grey.css">
+    <link rel="stylesheet" href="assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="background: rgb(0,0,0);">
+    <nav class="navbar navbar-light navbar-expand-md navbar" style="border-radius: 0px;background: #ffffff;border-bottom: 1px solid rgb(162,162,162) ;">
+        <div class="container-fluid"><a class="navbar-brand" href="index.html" style="border-color: rgba(255,255,255,0.9);color: rgba(1,1,1,0.9);font-family: Allerta, sans-serif;">Home</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="HTB.html" style="color: rgba(0,0,0,0.9);border-color: rgb(2,237,11);font-family: Allerta, sans-serif;">HackTheBox</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Certifications.html" style="color: rgba(0,0,0,0.5);font-family: Allerta, sans-serif;border-color: rgba(255,255,255,0.5);">Certifications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/assets/Resume/NickCerneResume.pdf" style="color: rgba(0,0,0,0.5);font-family: Allerta, sans-serif;">Resume</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="article-clean">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+                    <div class="intro" style="text-align: center;">
+                        <h1 class="text-center">Knife Walkthrough</h1>
+                        <p class="text-center"><span class="by">by</span> <a href="index.html">Nick Cerne</a><span class="date">April 14, 2021</span></p><img class="img-fluid" src="assets/img/knife/Pwned.PNG">
+                    </div>
+                    <div class="text">
+                        <p>Today I will be making an addition to my HackTheBox walkthrough series with an easy machine called Knife.&nbsp;</p>
+                        <p>The most difficult part about this machine was foothold enumeration. I struggled at first to find the attack vector that would grant me initial access to the box. Despite my initial struggles, Knife was not quite as difficult as the previous box, Celestial. Nonetheless, I learned something new about a recent vulnerability and genuinely enjoyed this box.&nbsp;</p>
+                        <h2 style="text-align: center;">The Walkthrough</h2>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/IPLocation.PNG"></figure>
+                        <p>As you can see from the image above, Knife is running on the IP address 10.129.163.55. Let's start with an nmap scan to get an idea of the services running on this machine.</p>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/Nmap.PNG">
+                            <figcaption>nmap Scan Report</figcaption>
+                        </figure>
+                        <p>A quick nmap scan reveals that there is an Apache web server running on HTTP port 80. Let's navigate to the web server by inputting the IP address into our browser.</p>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/Website.PNG"></figure>
+                        <p>Upon navigation, we can see the website. Promptly, we check out the the website source code, but are unable to identify other potential services and associated versions that give us any indication of a foothold. &nbsp;</p>
+                        <p>Let's try to brute force some directories using dirb to see if we can identify other pages or local file inclusion on the website.&nbsp;</p>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/DirbScan.PNG">
+                            <figcaption>Dirb Scan</figcaption>
+                        </figure>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/DirbResults.PNG">
+                            <figcaption>Dirb Results</figcaption>
+                        </figure>
+                        <p>Again, we are not presented with anything particularly useful to go off of. Perhaps we missed something. Let's take a step back and see if we can identify any other services via the response headers. &nbsp;</p>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/NetworkTraffic.PNG">
+                            <p>Looking at the response headers, we notice that the web server is utilizing PHP/8.1.0-dev. With a quick google search, we find that this constitutes a vulnerable instance.&nbsp;</p>
+                            <p>According to &nbsp;<a href="https://systemweakness.com/php-8-1-0-dev-backdoor-b262206d9b7f">this article</a>,&nbsp;PHP version 8.1.0-dev was released with a backdoor. This is due to attackers pushing a malicious commit to the PHP source repository, allowing them backdoor access to any web server that is running PHP/8.1.0-dev.</p>
+                            <p>This backdoor allows for remote code execution (RCE) through the abuse of HTTP response headers. By simply modifying our GET Request to include "User-Agentt: zerodiumsystem('cat /etc/passwd');," we are able to achieve and observe remote code execution. In this particular case, we have demoed remote code execution by retrieving the systems PASSWD file. We can see this in action by utilizing Burpsuite.</p>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/Burp.PNG">
+                                <figcaption>We modify the request in Burpsuite, and successfully request the /etc/passwd file. This indicates that we now have RCE on the machine.</figcaption>
+                            </figure>
+                            <p>Now that we have RCE, let's do some user enumeration and attempt to obtain a more interactive shell.</p>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/Burp2.PNG"></figure>
+                            <p>According to Burpsuite, we are interacting with the system as user James. Let's see if we can add our public RSA key to the James' authorized_keys file, and attempt to SSH into the server.</p>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp3.png">
+                            <figcaption>Observing James' SSH Keys</figcaption>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp4.png">
+                                <figcaption>Adding our public RSA key to James' authorized_keys</figcaption>
+                                </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/JamesLogin.PNG">
+                                <figcaption>Success! We have logged in as James.</figcaption>
+                                <p>Now that we have logged in as James, we immediately observe that the user.txt flag is located in his home directory.</p>
+                                <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/usertextfile.PNG">
+                                <p>Now that we have the user.txt flag and an interactive shell, let's find a way to escalate our privileges to root. The first thing I always check when performing privilege escalation enumeration are sudo privilege misconfigurations. Sudo privilege misconfigurations are common, and can be abused to gain root access.</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/SudoPrivileges.PNG">
+                                <figcaption class="figure-caption">James' Sudo Privileges</figcaption>
+                                <p>As you can see here, James can run a script called "Knife" with root privilege. Let's see if we can find out more about this script.</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Ruby.PNG">
+                                <figcaption class="figure-caption">Knife Script Ownership & File Type</figcaption>
+                                <p>Evidently, Knife is owned by the root user, so we cannot echo a reverse shell directly into the script. It is also worth noting that Knife is a symbolic link towards /opt/chef-workstation/bin/knife. This is the real location of the script, and it is located in a Ruby environment. Let's run the script and see what it does.</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Exec.PNG">
+                                <figcaption class="figure-caption">Executed Knife and Filtered Options for Execution Functionality </figcaption>
+                                <p>Running the script outputs hundreds of potential options we can specify for the Knife script. However, one of these options stood out in particular: exec.</p>
+                                <p>The exec option of the script allows us to use the Knife script (with which we have sudo privileges) to execute another script. This means that we can echo a root shell into a script, and then spawn the shell by running the script with the Knife script.</p>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/PrivilegeEscalation.PNG">
+                                <figcaption class="figure-caption">Echoing the root shell into root.sh and running the file via /usr/bin/knife with sudo privileges</figcaption>
+                            </figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/roottextfile.PNG">
+                                <figcaption class="figure-caption">Success! We have root privilege and the root.txt file!</figcaption>
+                            </figure>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section></section>
+    <div style="border-top-width: 2px;border-top-color: rgb(0,0,0);">
+        <footer class="footer-basic" style="border-top: 1px solid rgb(173,173,173) ;">
+            <div class="social"><a href="https://www.linkedin.com/in/nick-cerne/" style="background: var(--blue);color: var(--light);border-color: #055ada;border-bottom-width: 0px;border-bottom-color: rgb(255,255,255);"><i class="fa fa-star fa fa-linkedin fa-fw"></i></a></div>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="assets/Resume/NickCerneResume.pdf">Resume</a></li>
+                <li class="list-inline-item"><a href="mailto:ncerne00@vt.edu">Contact</a></li>
+            </ul>
+            <p class="copyright">Nick Cerne © 2021</p>
+        </footer>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="assets/js/Simple-Slider.js"></script>
+</body>
+
+</html>
