@@ -47,31 +47,31 @@
                         <p>Today I will be making an addition to my HackTheBox walkthrough series with an easy machine called Knife.&nbsp;</p>
                         <p>The most difficult part about this machine was foothold enumeration. I struggled at first to find the attack vector that would grant me initial access to the box. Despite my initial struggles, Knife was not quite as difficult as the previous box, Celestial. Nonetheless, I learned something new about a recent vulnerability and genuinely enjoyed this box.&nbsp;</p>
                         <h2 style="text-align: center;">The Walkthrough</h2>
-                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/IPLocation.png"></figure>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/IPLocation.png"></figure>
                         <p>As you can see from the image above, Knife is running on the IP address 10.129.163.55. Let's start with an nmap scan to get an idea of the services running on this machine.</p>
-                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/Nmap.PNG">
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Nmap.PNG">
                             <figcaption>nmap Scan Report</figcaption>
                         </figure>
                         <p>A quick nmap scan reveals that there is an Apache web server running on HTTP port 80. Let's navigate to the web server by inputting the IP address into our browser.</p>
-                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/Website.PNG"></figure>
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Website.PNG"></figure>
                         <p>Upon navigation, we can see the website. Promptly, we check out the the website source code, but are unable to identify other potential services and associated versions that give us any indication of a foothold. &nbsp;</p>
                         <p>Let's try to brute force some directories using dirb to see if we can identify other pages or local file inclusion on the website.&nbsp;</p>
-                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/DirbScan.PNG">
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/DirbScan.PNG">
                             <figcaption>Dirb Scan</figcaption>
                         </figure>
-                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/DirbResults.PNG">
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/DirbResults.PNG">
                             <figcaption>Dirb Results</figcaption>
                         </figure>
                         <p>Again, we are not presented with anything particularly useful to go off of. Perhaps we missed something. Let's take a step back and see if we can identify any other services via the response headers. &nbsp;</p>
-                        <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/NetworkTraffic.PNG">
+                        <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/NetworkTraffic.PNG">
                             <p>Looking at the response headers, we notice that the web server is utilizing PHP/8.1.0-dev. With a quick google search, we find that this constitutes a vulnerable instance.&nbsp;</p>
                             <p>According to &nbsp;<a href="https://systemweakness.com/php-8-1-0-dev-backdoor-b262206d9b7f">this article</a>,&nbsp;PHP version 8.1.0-dev was released with a backdoor. This is due to attackers pushing a malicious commit to the PHP source repository, allowing them backdoor access to any web server that is running PHP/8.1.0-dev.</p>
                             <p>This backdoor allows for remote code execution (RCE) through the abuse of HTTP response headers. By simply modifying our GET Request to include "User-Agentt: zerodiumsystem('cat /etc/passwd');," we are able to achieve and observe remote code execution. In this particular case, we have demoed remote code execution by retrieving the systems PASSWD file. We can see this in action by utilizing Burpsuite.</p>
-                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/Burp.PNG">
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp.PNG">
                                 <figcaption>We modify the request in Burpsuite, and successfully request the /etc/passwd file. This indicates that we now have RCE on the machine.</figcaption>
                             </figure>
                             <p>Now that we have RCE, let's do some user enumeration and attempt to obtain a more interactive shell.</p>
-                            <figure class="figure d-block"><img class="figure-img" src="assets/img/Knife/Burp2.PNG"></figure>
+                            <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp2.PNG"></figure>
                             <p>According to Burpsuite, we are interacting with the system as user James. Let's see if we can add our public RSA key to the James' authorized_keys file, and attempt to SSH into the server.</p>
                             <figure class="figure d-block"><img class="figure-img" src="assets/img/knife/Burp3.png">
                             <figcaption>Observing James' SSH Keys</figcaption>
